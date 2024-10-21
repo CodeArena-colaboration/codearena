@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <>
-      Start creating your landing page..
+     <h1>i am on my way</h1>
     </>
   );
 }
