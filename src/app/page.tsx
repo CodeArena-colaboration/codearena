@@ -40,7 +40,7 @@ const Home = () => {
     className="w-full h-full rounded-md transition-all duration-1000 ease-out group-hover:blur-[2px] group-hover:brightness-[80%] object-cover"
   />
   <div className="absolute inset-0 flex justify-center items-center text-black opacity-0 transition-opacity duration-500 ease-out hover:opacity-100">
-    <p className='text-white font-extrabold text-lg'>chat with friends</p>
+    <p className='text-white font-extrabold text-xl'>chat with friends</p>
   </div>
 </div>
 
@@ -55,7 +55,7 @@ const Home = () => {
   
   {/* Text inside the box, hidden by default */}
   <div className="absolute inset-0 flex justify-center items-center text-black opacity-0 transition-opacity duration-1000 ease-out hover:opacity-100">
-    <p className="text-white font-extrabold text-center text-lg">Create room and compete with friends</p>
+    <p className="text-white font-extrabold text-center text-xl">Create room and compete with friends</p>
   </div>
 </div>
 
@@ -67,7 +67,7 @@ const Home = () => {
     className="w-full h-full rounded-md transition-all duration-1000 ease-out group-hover:blur-[2px] group-hover:brightness-[80%] object-cover"
   />
   <div className="absolute inset-0 flex justify-center items-center text-black opacity-0 transition-opacity duration-500 ease-out hover:opacity-100">
-    <p className='text-white font-extrabold text-center text-lg'>Challenge online coder for 1V1  </p>
+    <p className='text-white font-extrabold text-center text-xl'>Challenge online coder for 1V1  </p>
   </div>
 </div>
 
@@ -82,7 +82,7 @@ const Home = () => {
   
   {/* Text inside the box, hidden by default */}
   <div className="absolute inset-0 flex justify-center items-center text-black opacity-0 transition-opacity duration-500 ease-out hover:opacity-100">
-    <p className='text-[rgba(245, 245, 245, 0.8)] font-extrabold text-white text-lg text-center'>Choose your favourite topics </p>
+    <p className='text-[rgba(245, 245, 245, 0.8)] font-extrabold text-white text-xl text-center'>Choose your favourite topics </p>
   </div>
 </div>
 
