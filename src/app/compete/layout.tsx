@@ -73,7 +73,7 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
                     width={50}
                     height={50}
                     alt="logo"
-                />
+                /> 
                     Code Arena
                 </h1>
                 <div className="flex flex-col gap-2 mt-8">
