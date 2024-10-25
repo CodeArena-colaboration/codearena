@@ -1,11 +1,102 @@
+'use client'
 import React from 'react'
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
 
-const friends = () => {
-  return (
-    <div>friends</div>
-  )
+import { Button } from "@/components/ui/button"
+
+import EventForm from "@/components/container/EventForm";
+import EventList from "@/components/container/EventList";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { supabase } from "@/utils";
+import { Skeleton } from "@/components/ui/skeleton"
+import { Card } from "@/components/ui/card";
+// import { withAuth } from "@/components/hoc/withAuth";
+// import { AppContext } from "@/components/AppContext";
+
+interface Event {
+    name: string,
+    id: string,
+    event_id: string;
+    created_at: string;
 }
 
-export default friends
+function AdminEvents() {
+    // const appContext = useContext(AppContext)
+    const [events, setEvents] = useState<Event[]>([]);
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const toggleSheet = useCallback(() => {
+        setOpen(open => !open)
+    }, [])
+
+    const refreshEvents = () => {
+        toggleSheet();
+        fetchEvents()
+    }
+
+    const fetchEvents = async () => {
+        setLoading(true);
+        const { data } = await supabase.from("events").select()
+
+        if(data && data.length > 0) {
+            setEvents(data);
+        }
+        setLoading(false);
+    }
+
+
+    useEffect(() => {
+        // if(appContext?.user?.id) {
+            fetchEvents()
+        // }
+    }, [])
+
+    return (
+        <>
+            <div className="flex justify-end max-w-[780px] m-auto">
+                <div>
+                    <Sheet open={open} onOpenChange={setOpen}>
+                        <SheetTrigger>
+                            <Button onClick={toggleSheet} variant="default">New Event</Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                            <SheetHeader>
+                                <SheetTitle className="text-left text-xl font-semibold">Create New Event?</SheetTitle>
+                                <SheetDescription className="text-left">
+                                    <EventForm refreshEvents={refreshEvents} closeSheet={toggleSheet} />
+                                </SheetDescription>
+                            </SheetHeader>
+                        </SheetContent>
+                    </Sheet>
+                </div>
+            </div>
+            <div className="mt-4">
+                {
+                    loading ? (
+                        <div className="max-w-[780px] m-auto">
+                            <Card className="shadow-none p-5">
+                                <Skeleton className="h-3 w-[250px]" />
+                                <Skeleton className="h-2 mt-2 w-[150px]" />
+                            </Card>
+                        </div>
+                    ): (
+                        <EventList events={events} refreshList={fetchEvents}/>
+                    )
+                }
+            </div>
+            
+        </>
+    )
+}
+
+export default AdminEvents;
 
 //1:16:42
