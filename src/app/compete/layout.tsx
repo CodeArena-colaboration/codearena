@@ -69,7 +69,7 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
             >
                 <h1 className="font-bold text-2xl text-white">
                 <Image
-                    src="/logo.png"
+                    src="/codearena_logo.svg"
                     width={50}
                     height={50}
                     alt="logo"

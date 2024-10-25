@@ -7,3 +7,5 @@ const friends = () => {
 }
 
 export default friends
+
+//1:16:42
