@@ -1,7 +1,11 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
+  const router=useRouter();
+
   return (
     <div className="bg-[rgba(14,14,14,1)] fixed w-full top-0 z-50">
       <div className="flex justify-between items-center w-full py-3 px-5">
@@ -19,7 +23,7 @@ const Navbar = () => {
           <button className="bg-gray-800 border-2 border-[rgba(196,93,60,1)] hover:bg-gray-700 transition duration-300 text-[rgba(118,210,218,1)] font-bold rounded py-3 px-6 text-sm md:text-base">
             Connect
           </button>
-          <button className="bg-gray-800 border-2 border-[rgba(196,93,60,1)] hover:bg-gray-700 transition duration-300 text-[rgba(118,210,218,1)] font-bold rounded py-3 px-6 text-sm md:text-base">
+          <button onClick={()=>{router.push('/compete/friends')}} className="bg-gray-800 border-2 border-[rgba(196,93,60,1)] hover:bg-gray-700 transition duration-300 text-[rgba(118,210,218,1)] font-bold rounded py-3 px-6 text-sm md:text-base">
             Compete
           </button>
           <button className="bg-gray-800 border-2 border-[rgba(196,93,60,1)] hover:bg-gray-700 transition duration-300 text-[rgba(118,210,218,1)] font-bold rounded py-3 px-6 text-sm md:text-base">

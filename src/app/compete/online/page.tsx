@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React from "react";
+import AdminLayout from "@/components/layouts/competeLayout";
 const online = () => {
   return (
-    <div>online</div>
-  )
-}
+    <AdminLayout title="Online Page">
+      <div>
+        <h1>Friends Page Content</h1>
+      </div>
+    </AdminLayout>
+  );
+};
 
-export default online
+export default online;
