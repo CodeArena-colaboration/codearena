@@ -15,9 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className=""
+        className="h-[100%] bg-black"
       >
         {children}
+        
       </body>
     </html>
   );
