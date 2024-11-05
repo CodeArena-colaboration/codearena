@@ -1,13 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { FaGoogle, FaGithub, FaLinkedin } from "react-icons/fa";
-import { supabase } from "@/lib/supabaseClient"; // Import your Supabase client
+import { supabase } from "@/utils"; // Import your Supabase client
+
+// Define the form data type
+interface FormData {
+  email: string;
+  password: string;
+  phone: string;
+}
 
 const LogIn = () => {
   const router = useRouter();
-  const [isPhoneSignIn, setIsPhoneSignIn] = useState(false);
-  const [formData, setFormData] = useState({
+  const [isPhoneSignIn, setIsPhoneSignIn] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
     phone: "",
@@ -17,37 +24,32 @@ const LogIn = () => {
     setIsPhoneSignIn(!isPhoneSignIn);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEmailSignIn = async () => {
     try {
+      // Try signing in with email and password
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
 
       if (error) {
-        alert("Invalid email or password");
+        // If password is incorrect or email doesn't exist, show an alert
+        if (error.message === "Invalid login credentials") {
+          alert("Email or password is incorrect");
+        } else {
+          alert("An error occurred during login");
+          console.error("Login error:", error);
+        }
         return;
       }
 
-      // Check if user is registered
-      const { data: userData, error: userError } = await supabase
-        .from("users")
-        .select("*")
-        .eq("email", formData.email)
-        .single();
-
-      if (userError || !userData) {
-        alert("User not registered");
-        router.push("/signup");
-      } else {
-        // Redirect to profile page if user is registered
-        router.push("/profile");
-      }
+      // Redirect to profile page if login is successful
+      router.push("/my_profile");
     } catch (error) {
       console.error("Error during email login:", error);
       alert("Error during login");
@@ -58,7 +60,24 @@ const LogIn = () => {
     router.push("/verifyotp"); // Redirect to OTP verification page for phone sign-in
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleOAuthSignIn = async (provider: "google" | "github" | "linkedin") => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({ provider });
+
+      if (error) {
+        alert(`An error occurred during ${provider} login`);
+        console.error(`${provider} login error:`, error);
+        return;
+      }
+
+      // Supabase will handle the redirect after OAuth sign-in. Ensure redirect path in Supabase settings.
+    } catch (error) {
+      console.error(`Error during ${provider} OAuth login:`, error);
+      alert(`Error during ${provider} login`);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (isPhoneSignIn) {
@@ -93,13 +112,25 @@ const LogIn = () => {
 
       <form onSubmit={handleSubmit} className="w-[40%] rounded-lg text-sm [&>*]:py-3">
         <div className="flex justify-between space-x-4">
-          <button className="flex items-center justify-center h-12 w-full p-2 bg-white border rounded-md hover:bg-gray-100 shadow-md">
+          <button
+            type="button"
+            onClick={() => handleOAuthSignIn("google")}
+            className="flex items-center justify-center h-12 w-full p-2 bg-white border rounded-md hover:bg-gray-100 shadow-md"
+          >
             <FaGoogle className="text-red-500 text-lg" />
           </button>
-          <button className="flex items-center justify-center h-12 w-full p-2 bg-white border rounded-md hover:bg-gray-100 shadow-md">
+          <button
+            type="button"
+            onClick={() => handleOAuthSignIn("github")}
+            className="flex items-center justify-center h-12 w-full p-2 bg-white border rounded-md hover:bg-gray-100 shadow-md"
+          >
             <FaGithub className="text-black text-lg" />
           </button>
-          <button className="flex items-center justify-center w-full h-12 p-2 bg-white border rounded-md hover:bg-gray-100 shadow-md">
+          <button
+            type="button"
+            onClick={() => handleOAuthSignIn("linkedin")}
+            className="flex items-center justify-center w-full h-12 p-2 bg-white border rounded-md hover:bg-gray-100 shadow-md"
+          >
             <FaLinkedin className="text-blue-600 text-lg" />
           </button>
         </div>
@@ -179,3 +210,4 @@ const LogIn = () => {
 };
 
 export default LogIn;
+

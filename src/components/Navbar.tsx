@@ -3,6 +3,9 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+
+
+
 const Navbar = () => {
   const router=useRouter();
 
@@ -31,7 +34,7 @@ const Navbar = () => {
           </button>
         </div>
         <div className="ml-auto">
-          <button className="bg-gray-800 hover:bg-gray-700 transition duration-300 text-[rgba(118,210,218,1)] font-bold rounded-lg border-2 border-[rgba(196,93,60,1)] py-2 px-6 text-sm md:text-base">
+          <button onClick={()=>{router.push('/signup')}}  className="bg-gray-800 hover:bg-gray-700 transition duration-300 text-[rgba(118,210,218,1)] font-bold rounded-lg border-2 border-[rgba(196,93,60,1)] py-2 px-6 text-sm md:text-base">
             SignUp/login
           </button>
         </div>
