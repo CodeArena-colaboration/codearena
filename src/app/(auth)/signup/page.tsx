@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub, FaLinkedin } from "react-icons/fa";
-import { createClient } from "../../../../utils/supabase/server"; // Adjust based on your file structure
+// import { createClient } from "../../../../utils/supabase/server"; // Adjust based on your file structure
 import { supabase } from "@/utils";
 
 export default function SignupPage() {
